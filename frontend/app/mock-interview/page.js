@@ -2,40 +2,25 @@
 
 import VideoRecorder from "@/components/mock-interview/VideoRecorder";
 import QuestionsPanel from "@/components/mock-interview/QuestionsPanel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import questions from "@/data/questions.json";
 import Timer from "@/components/common/Timer";
 import Tabs from "@/components/common/Tabs";
 import Question from "@/components/mock-interview/Question";
-import PreviousAttemptSummary from "@/components/mock-interview/PreviousAttempSummary";
+import PreviousAttemptSummary from "@/components/mock-interview/PreviousAttemptSummary";
 import AttemptHistory from "@/components/mock-interview/AttemptHistory";
+import axios from "axios";
+import { flattenResults } from "@/utils/edit-results";
 
 const tabs = ["Question", "Previous Attempts"];
-const attempts = [
-  {
-    id: 1,
-    date: new Date(),
-  },
-  {
-    id: 2,
-    date: new Date(),
-  },
-  {
-    id: 3,
-    date: new Date(),
-  },
-  {
-    id: 4,
-    date: new Date(),
-  },
-];
 
 function MockInterview() {
   const [questionsPanelIsVisible, setQuestionsPanelIsVisible] = useState(false);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [currentTab, setCurrentTab] = useState(tabs[0]);
-  const [currentAttemptId, setCurrentAttemptId] = useState(1);
+  const [currentAttemptId, setCurrentAttemptId] = useState(0);
+  const [attemptsHistory, setAttemptsHistory] = useState([]);
 
   const showQuestionsSidePanelHandler = () => {
     setQuestionsPanelIsVisible(true);
@@ -76,6 +61,44 @@ function MockInterview() {
   const attemptChangeHandler = (attemptId) => {
     setCurrentAttemptId(attemptId);
   };
+
+  const fetchAttemptsHistory = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/mock-interview-attempts",
+        {
+          params: {
+            user_id: "6553a5289f33c7101f5ee3b4",
+            question: currentQuestion,
+          },
+        }
+      );
+      const flattenedResults = res?.data?.map((result) => {
+        return flattenResults(result);
+      });
+      setAttemptsHistory(flattenedResults);
+      flattenedResults?.length > 0 &&
+        setCurrentAttemptId(flattenedResults[0]?._id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const submitAttemptHandler = async (videoBlob) => {
+    const formData = new FormData();
+    formData.append("video", videoBlob);
+    formData.append("user", "6553a5289f33c7101f5ee3b4");
+    formData.append("question", currentQuestion);
+
+    const res = await axios.post(
+      "http://localhost:5000/mock-interview-attempts",
+      formData
+    );
+  };
+
+  useEffect(() => {
+    currentTab == tabs[1] && fetchAttemptsHistory();
+  }, [currentTab, currentQuestion]);
 
   return (
     <div className="flex h-full">
@@ -124,7 +147,7 @@ function MockInterview() {
           )}
           {currentTab == tabs[1] && (
             <AttemptHistory
-              attempts={attempts}
+              attempts={attemptsHistory}
               onAttemptClick={attemptChangeHandler}
               currentAttemptId={currentAttemptId}
             />
@@ -137,12 +160,17 @@ function MockInterview() {
             <VideoRecorder
               onStartRecording={startRecordingHandler}
               onStopRecording={stopRecordingHandler}
+              onSubmitAttempt={submitAttemptHandler}
             />
           </div>
         )}
         {currentTab == tabs[1] && (
           <div className="w-[60%]">
-            <PreviousAttemptSummary />
+            <PreviousAttemptSummary
+              attempt={attemptsHistory?.find((attempt) => {
+                return attempt?._id == currentAttemptId;
+              })}
+            />
           </div>
         )}
       </div>

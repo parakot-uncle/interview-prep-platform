@@ -42,24 +42,12 @@ function VideoRecorder(props) {
     setCapturing(false);
   }, [mediaRecorderRef, setCapturing]);
 
-  const handleDownload = useCallback(async () => {
+  const submitAttemptHandler = useCallback(async () => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
         type: "video/webm",
       });
-      const formData = new FormData();
-      formData.append("video", blob);
-      formData.append("text", "hey")
-      // const url = URL.createObjectURL(blob);
-      // const a = document.createElement("a");
-      // document.body.appendChild(a);
-      // a.style = "display: none";
-      // a.href = url;
-      // a.download = "react-webcam-stream-capture.webm";
-      // a.click();
-      // window.URL.revokeObjectURL(url);
-      console.log(blob);
-      const url = await axios.post("http://localhost:5000", formData);
+      props?.onSubmitAttempt(blob);
       setRecordedChunks([]);
     }
   }, [recordedChunks]);
@@ -99,10 +87,10 @@ function VideoRecorder(props) {
         )}
         {recordedChunks.length > 0 && (
           <button
-            onClick={handleDownload}
+            onClick={submitAttemptHandler}
             className="text-sm rounded-md px-4 py-2 bg-[#256bd4] hover:bg-tertiaryBlue-100"
           >
-            Download
+            Submit
           </button>
         )}
       </div>

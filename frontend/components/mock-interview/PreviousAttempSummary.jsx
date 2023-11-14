@@ -6,8 +6,9 @@ function PreviousAttemptSummary(props) {
   return (
     <>
       <ReactPlayer
-        url="https://www.youtube.com/watch?v=70heaIgcxr4"
+        url="https://firebasestorage.googleapis.com/v0/b/interview-prep-platform.appspot.com/o/temp%2Ftemp_video.webm?alt=media"
         width="100%"
+        controls={true}
       />
       <div className="flex space-x-4 my-6">
         <Card className="bg-tertiaryGreen-100 text-tertiaryGreen-120 w-[50%] space-y-4 p-6">

@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import Card from "../common/Card";
+import axios from "axios";
 
 function VideoRecorder(props) {
   const webcamRef = useRef(null);
@@ -41,19 +42,24 @@ function VideoRecorder(props) {
     setCapturing(false);
   }, [mediaRecorderRef, setCapturing]);
 
-  const handleDownload = useCallback(() => {
+  const handleDownload = useCallback(async () => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
         type: "video/webm",
       });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = url;
-      a.download = "react-webcam-stream-capture.webm";
-      a.click();
-      window.URL.revokeObjectURL(url);
+      const formData = new FormData();
+      formData.append("video", blob);
+      formData.append("text", "hey")
+      // const url = URL.createObjectURL(blob);
+      // const a = document.createElement("a");
+      // document.body.appendChild(a);
+      // a.style = "display: none";
+      // a.href = url;
+      // a.download = "react-webcam-stream-capture.webm";
+      // a.click();
+      // window.URL.revokeObjectURL(url);
+      console.log(blob);
+      const url = await axios.post("http://localhost:5000", formData);
       setRecordedChunks([]);
     }
   }, [recordedChunks]);

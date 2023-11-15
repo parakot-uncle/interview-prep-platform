@@ -11,6 +11,7 @@ import PreviousAttemptSummary from "@/components/mock-interview/PreviousAttemptS
 import AttemptHistory from "@/components/mock-interview/AttemptHistory";
 import axios from "axios";
 import { flattenResults } from "@/utils/edit-results";
+import BodyDetections from "@/components/mock-interview/BodyDetections";
 
 const tabs = ["Question", "Previous Attempts"];
 
@@ -147,11 +148,18 @@ function MockInterview() {
             />
           )}
           {currentTab == tabs[1] && (
-            <AttemptHistory
-              attempts={attemptsHistory}
-              onAttemptClick={attemptChangeHandler}
-              currentAttemptId={currentAttemptId}
-            />
+            <div className="space-y-12">
+              <AttemptHistory
+                attempts={attemptsHistory}
+                onAttemptClick={attemptChangeHandler}
+                currentAttemptId={currentAttemptId}
+              />
+              <BodyDetections
+                attempt={attemptsHistory?.find((attempt) => {
+                  return attempt?._id == currentAttemptId;
+                })}
+              />
+            </div>
           )}
         </div>
 

@@ -6,7 +6,7 @@ function AttemptHistory(props) {
   return (
     <div className="space-y-6">
       <h2 className="text-lg font-semibold">Attempt History</h2>
-      <div className="space-y-4">
+      <div className="space-y-4 h-[400px] overflow-y-auto">
         {props?.attempts?.map((attempt, index) => {
           return (
             <Card

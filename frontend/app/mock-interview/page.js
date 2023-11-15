@@ -30,8 +30,9 @@ function MockInterview() {
     setQuestionsPanelIsVisible(false);
   };
 
-  const startRecordingHandler = () => {
+  const startRecordingHandler = async () => {
     setTimerIsRunning(true);
+    await axios.post("http://localhost:5000/start-recording");
   };
 
   const stopRecordingHandler = () => {

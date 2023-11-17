@@ -3,3 +3,5 @@ frontend/.env
 
 backend/venv
 backend/.env
+backend/ML/answer_comparison/word2vec-google-news-300
+backend/ML/speech_emotion_recognition/model

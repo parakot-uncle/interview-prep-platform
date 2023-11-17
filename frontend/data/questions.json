@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "text": "Tell me something about yourself",
+    "is_answered": false
+  },
+  {
+    "id": 2,
+    "text": "Tell me something about yourself",
+    "is_answered": false
+  },
+  {
+    "id": 3,
+    "text": "Tell me something about yourself",
+    "is_answered": false
+  },
+  {
+    "id": 4,
+    "text": "Tell me something about yourself",
+    "is_answered": false
+  }
+]

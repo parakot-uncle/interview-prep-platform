@@ -28,7 +28,7 @@ function QuestionsPanel(props) {
               props?.onChangeQuestion(num);
             }}
           >
-            {`Q.${num}` }
+            {`Q.${num}`}
           </button>
         );
       })}

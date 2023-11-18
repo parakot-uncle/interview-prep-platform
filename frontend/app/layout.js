@@ -12,9 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className + "h-screen flex flex-col"}>
+      <body className={inter.className + " flex flex-col justify-start relative"}>
         <Navbar />
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow overflow-y-">{children}</div>
       </body>
     </html>
   );

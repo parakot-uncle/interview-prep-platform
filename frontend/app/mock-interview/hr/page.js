@@ -2,8 +2,8 @@
 
 import MockInterview from "@/components/mock-interview/MockInterview";
 
-function MockInterviewCategory({ params }) {
-  return <MockInterview category={params?.category} />;
+function MockInterviewCategory() {
+  return <MockInterview category="hr" />;
 }
 
 export default MockInterviewCategory;

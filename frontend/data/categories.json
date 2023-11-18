@@ -2,5 +2,6 @@
   { "name": "Java", "path": "java" },
   { "name": "Object Oriented Programming", "path": "oops" },
   { "name": "Operating Systems", "path": "os" },
-  { "name": "Database Managment Systems", "path": "dbms" }
+  { "name": "Database Managment Systems", "path": "dbms" },
+  { "name": "Human Resources", "path": "hr" }
 ]

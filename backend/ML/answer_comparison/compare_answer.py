@@ -8,8 +8,8 @@ import math
 import requests
 from gensim import models
 
-nltk.download("punkt")
-nltk.download("stopwords")
+# nltk.download("punkt")
+# nltk.download("stopwords")
 
 word2vec = models.KeyedVectors.load_word2vec_format(
     os.path.join(

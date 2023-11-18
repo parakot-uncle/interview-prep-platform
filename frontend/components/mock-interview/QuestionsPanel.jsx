@@ -13,7 +13,7 @@ function QuestionsPanel(props) {
 
   return (
     // <SidePanel show={props?.show} onClose={props?.onClose} title="Questions">
-    <div className="bg-[#292929] h-[93vh] flex-shrink-0 flex flex-col justify-center">
+    <div className="bg-[#292929] h-screen z-5 fixed top-[50px] flex-shrink-0 flex flex-col justify-center">
       {array?.map((num, index) => {
         return (
           <button

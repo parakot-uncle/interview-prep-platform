@@ -22,8 +22,7 @@ function Question(props) {
             shine and share what you offer. Be authentic and remember—relax!
             Have fun and let your skills and personality do the talking! Most
             importantly, be authentic. Just speak and focus in the way that
-            makes you comfortable. Get excited and share your energy with the
-            camera!
+            makes you comfortable.
           </p>
         </div>
       </Card>
